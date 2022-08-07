@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
 
 {
     //********* Input Direction ************//
-    private float moveInput;
+    private Vector2 moveInput;
 
 
     //********* Jump count tracker **************//
@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour
     private bool isWalled;
     private bool isWallSliding;
     private bool canJump;
+    private bool isShooting = false;
 
 
     //********** Component variables **************//
@@ -34,26 +35,20 @@ public class PlayerController : MonoBehaviour
     public Transform wallCheck;
 
 
-    //*************** Public Vectors ***************//
-    public Vector2 wallHopDirection;
-    public Vector2 wallJumpDirection;
-
-
     //*********** Character Movement Settings *********//
     public float moveSpeed = 10f;
-    public float jumpForce = 5f;
+    public float jumpForce = 15f;
     public int jumpCount = 2;
-    public float airMoveForce = 5f;
-    public float airDragMultiplier = 0.95f;
+    // public float airMoveForce = 5f;
+    public float airDragMultiplier = 0.75f;
     public float variableJumpHeight = 0.5f;
-    public float wallSlideSpeed = 4f;
-    public float wallHopForce = 5f;
+    public float wallSlideSpeed = 2f;
     public float wallJumpForce = 20f;
 
 
     //********** Surroundings detector settings ***********//
-    public float groundCheckRadius = 1f;
-    public float wallCheckDistance = 1f;
+    public float groundCheckRadius = .35f;
+    public float wallCheckDistance = .35f;
 
 
     //********** Variable declarations ***********//
@@ -62,8 +57,6 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         jumpsLeft = jumpCount;
-        wallHopDirection.Normalize();
-        wallJumpDirection.Normalize();
     }
 
 
@@ -90,6 +83,7 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("yVelocity", rb.velocity.y);
         animator.SetInteger("jumpsLeft", jumpsLeft);
         animator.SetBool("isWallSliding", isWallSliding);
+        animator.SetBool("isShooting", isShooting);
     }
 
 
@@ -102,9 +96,14 @@ public class PlayerController : MonoBehaviour
 
     private void CheckIfCanJump()
     {
-        if ((isGrounded && rb.velocity.y <= 0) || isWallSliding)
+        if (isGrounded && rb.velocity.y <= 0.1)
         {
             jumpsLeft = jumpCount;
+        }
+
+        if (isWallSliding)
+        {
+            jumpsLeft = 1;
         }
 
         if (jumpsLeft <= 0)
@@ -131,7 +130,7 @@ public class PlayerController : MonoBehaviour
 
     private void CheckInput()
     {
-        moveInput = Input.GetAxisRaw("Horizontal");
+        moveInput.x = Input.GetAxisRaw("Horizontal");
 
         if (Input.GetButtonDown("Jump"))
         {
@@ -142,17 +141,25 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * variableJumpHeight);
         }
-    }
 
+        if (Input.GetButtonDown("Fire1") && isGrounded)
+        {
+            isShooting = true;
+        }
+        else if (Input.GetButtonUp("Fire1"))
+        {
+            isShooting = false;
+        }
+    }
 
     // ************ Character Manipulations ************* //
     private void moveDirection()
     {
-        if (isFacingRight && moveInput < 0)
+        if (isFacingRight && moveInput.x < 0)
         {
             Flip();
         }
-        else if (!isFacingRight && moveInput > 0)
+        else if (!isFacingRight && moveInput.x > 0)
         {
             Flip();
         }
@@ -160,17 +167,13 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        if (isGrounded)
-        {
-            rb.velocity = new Vector2(moveSpeed * moveInput, rb.velocity.y);
-        }
-        else if (!isGrounded && !isWallSliding && moveInput != 0)
-        {
-            rb.velocity = new Vector2(moveSpeed * moveInput, rb.velocity.y);
-        }
-        else if (!isGrounded && !isWallSliding && moveInput == 0)
+        if (!isGrounded && !isWallSliding && moveInput.x == 0)
         {
             rb.velocity = new Vector2(rb.velocity.x * airDragMultiplier, rb.velocity.y);
+        }
+        else
+        {
+            rb.velocity = new Vector2(moveSpeed * moveInput.x, rb.velocity.y);
         }
 
         if (rb.velocity.x != 0)
@@ -189,6 +192,16 @@ public class PlayerController : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, -wallSlideSpeed);
             }
         }
+
+        if (isShooting)
+        {
+            rb.velocity = new Vector2(0, 0);
+        }
+        else if (!isShooting)
+        {
+            rb.velocity = new Vector2(moveSpeed * moveInput.x, rb.velocity.y);
+        }
+
     }
 
     private void Jump()
@@ -198,18 +211,11 @@ public class PlayerController : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             jumpsLeft--;
         }
-        else if (isWallSliding && moveInput == 0 && canJump)
+        else if ((isWallSliding || isWalled) && moveInput.x != 0 && canJump)
         {
             isWallSliding = false;
             jumpsLeft--;
-            Vector2 forceToAdd = new Vector2(wallHopForce * wallHopDirection.x * -facingDirection, wallHopForce * wallHopDirection.y);
-            rb.AddForce(forceToAdd, ForceMode2D.Impulse);
-        }
-        else if ((isWallSliding || isWalled) && moveInput != 0 && canJump)
-        {
-            isWallSliding = false;
-            jumpsLeft--;
-            Vector2 forceToAdd = new Vector2(wallJumpForce * wallJumpDirection.x * moveInput, wallJumpForce * wallJumpDirection.y);
+            Vector2 forceToAdd = new Vector2(wallJumpForce * moveInput.x, wallJumpForce);
             rb.AddForce(forceToAdd, ForceMode2D.Impulse);
         }
     }
@@ -229,7 +235,6 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(groundCheck.position, groundCheckRadius);
-
         Gizmos.DrawLine(wallCheck.position, new Vector3(wallCheck.position.x + wallCheckDistance, wallCheck.position.y, wallCheck.position.z));
     }
 }
