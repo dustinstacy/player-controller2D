@@ -19,7 +19,6 @@ public class Enemy : MonoBehaviour
             Die();
         }
 
-
     }
 
     public void Die()

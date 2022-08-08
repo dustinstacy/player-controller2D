@@ -30,6 +30,7 @@ public class PlayerCombat : MonoBehaviour
     void isAttacking()
     {
         animator.SetTrigger("isAttacking");
+
     }
 
     private void Attack()
