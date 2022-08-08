@@ -5,16 +5,30 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputHandler : MonoBehaviour
 {
-    public Vector2 MoveInput { get; private set; }
+    public Vector2 RawMoveInput { get; private set; }
+    public int NormInputX { get; private set; }
+    public int NormInputY { get; private set; }
+    public bool JumpInput { get; private set; }
+
 
     public void OnMoveInput(InputAction.CallbackContext context)
     {
-        MoveInput = context.ReadValue<Vector2>();
-        Debug.Log("MoveInput");
+        // Read Input Value //
+        RawMoveInput = context.ReadValue<Vector2>();
+
+        // Normalize input value to create toggle like movement. Comment out if you desire variable movement speed based on joystick input //
+        NormInputX = (int)(RawMoveInput * Vector2.right).normalized.x;
+        NormInputY = (int)(RawMoveInput * Vector2.up).normalized.y;
     }
 
     public void OnJumpInput(InputAction.CallbackContext context)
     {
-
+        if (context.started)
+        {
+            JumpInput = true;
+        }
     }
+
+    public void UseJumpInput() => JumpInput = false;
+
 }
