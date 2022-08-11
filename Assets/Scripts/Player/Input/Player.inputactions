@@ -7,7 +7,7 @@
             "actions": [
                 {
                     "name": "Movement",
-                    "type": "Value",
+                    "type": "PassThrough",
                     "id": "081929c5-4944-4478-8891-c3237ae67621",
                     "expectedControlType": "Vector2",
                     "processors": "",
@@ -24,83 +24,48 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Shoot",
+                    "name": "Grab",
                     "type": "Button",
-                    "id": "26519af8-8a9e-425b-8fab-446c859b75d9",
+                    "id": "e4f5dbfc-febe-481c-b447-2c22f67cd4be",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Attack",
+                    "name": "Dash",
                     "type": "Button",
-                    "id": "2f122227-3c94-4e4e-ae96-fa407a8e262b",
+                    "id": "f0ece07c-1798-4747-9ec0-1ecef703bd0a",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "DashDirection",
+                    "type": "Value",
+                    "id": "7408d523-8a4e-4201-baed-2611efb6f6b5",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
                 {
                     "name": "",
-                    "id": "5b3e7f05-263d-4a1f-8731-f21a690f6e29",
-                    "path": "<Gamepad>/buttonNorth",
+                    "id": "1b94d17b-bdc8-4d6c-8dac-7822fa78e4fc",
+                    "path": "<XInputController>/leftStick",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Shoot",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b696d679-0ec7-4b9f-9843-9d9fe1f92128",
-                    "path": "<Keyboard>/j",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Shoot",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e57a38c2-6261-4eb7-8818-ed9ad223532b",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a09223d8-d0a0-47c2-ac10-7936b6c4be56",
-                    "path": "<Keyboard>/k",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "bd28c4db-2c07-4239-9612-8e58c0122357",
-                    "path": "<Gamepad>/leftStick",
-                    "interactions": "",
-                    "processors": "StickDeadzone",
-                    "groups": "Gamepad",
+                    "groups": "Xbox",
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "2D Vector",
-                    "id": "6a6c579e-fdb8-45fd-adfa-c46e113ffd15",
+                    "id": "df3acc41-584b-4418-90bf-df679f08020f",
                     "path": "2DVector",
                     "interactions": "",
                     "processors": "",
@@ -111,7 +76,7 @@
                 },
                 {
                     "name": "up",
-                    "id": "eab2a060-83b3-4843-8ea5-f0610ceb16de",
+                    "id": "8fae9ee2-587f-4c1d-80a4-be9d3350ade4",
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
@@ -122,7 +87,7 @@
                 },
                 {
                     "name": "down",
-                    "id": "289fcf1b-17de-447e-88ac-3170e1171e1c",
+                    "id": "62b40b12-9abf-42b9-a82f-638ac94c7ddb",
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
@@ -133,7 +98,7 @@
                 },
                 {
                     "name": "left",
-                    "id": "b6172746-ffec-4343-8f68-8bc3879e855f",
+                    "id": "4efc861c-8211-4455-8230-d5205747929b",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
@@ -144,7 +109,7 @@
                 },
                 {
                     "name": "right",
-                    "id": "82d5f21e-34d2-4c14-a2ed-b18c89f8a118",
+                    "id": "7c13ff5f-cd9f-4c01-9b1f-a3c5c0c01721",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
@@ -155,12 +120,12 @@
                 },
                 {
                     "name": "",
-                    "id": "5b26ae58-9449-4fee-a168-89aac736c314",
-                    "path": "<Gamepad>/buttonSouth",
+                    "id": "93a3d9ac-c8fb-4e4e-b72c-f04cb6a34f51",
+                    "path": "<XInputController>/dpad",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Jump",
+                    "groups": "Xbox",
+                    "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -172,6 +137,83 @@
                     "processors": "",
                     "groups": "Keyboard",
                     "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f7f7c7c1-84e2-4335-92bd-c58288713b9e",
+                    "path": "<XInputController>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Xbox",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "03fdfba9-9396-44b8-b9eb-76dbdb9407f4",
+                    "path": "<Keyboard>/j",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Grab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "25f24099-b01b-4007-89a0-9189d7eb0ff3",
+                    "path": "<XInputController>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Xbox",
+                    "action": "Grab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b7864d57-7304-4d8e-afc9-57882286d223",
+                    "path": "<XInputController>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Xbox",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1e511066-5366-410e-9619-875bb306b246",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2cafed79-becc-4d18-976f-5562278e3bb0",
+                    "path": "<XInputController>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Xbox",
+                    "action": "DashDirection",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0a145c37-66a7-4ece-a1b3-3daebdcf9d72",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "DashDirection",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -196,11 +238,11 @@
             ]
         },
         {
-            "name": "Gamepad",
-            "bindingGroup": "Gamepad",
+            "name": "Xbox",
+            "bindingGroup": "Xbox",
             "devices": [
                 {
-                    "devicePath": "<Gamepad>",
+                    "devicePath": "<XInputController>",
                     "isOptional": false,
                     "isOR": false
                 }
