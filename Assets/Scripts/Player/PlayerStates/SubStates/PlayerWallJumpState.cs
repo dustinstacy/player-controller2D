@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerWallJumpState : PlayerAbilityState
 {
     private int wallJumpDirection;
+
     public PlayerWallJumpState(Player player, PlayerStateMachine stateMachine, PlayerData playerData, string animBoolName) : base(player, stateMachine, playerData, animBoolName)
     {
     }
@@ -25,7 +26,8 @@ public class PlayerWallJumpState : PlayerAbilityState
 
         player.Anim.SetFloat("yVelocity", player.CurrentVelocity.y);
         player.Anim.SetFloat("xVelocity", Mathf.Abs(player.CurrentVelocity.x));
-        if (Time.time > startTime + playerData.wallJumpTime)
+
+        if (Time.time >= startTime + playerData.wallJumpTime)
         {
             isAbilityDone = true;
         }
