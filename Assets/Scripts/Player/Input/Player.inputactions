@@ -183,7 +183,7 @@
                 {
                     "name": "",
                     "id": "25f24099-b01b-4007-89a0-9189d7eb0ff3",
-                    "path": "<XInputController>/buttonWest",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "Xbox",
@@ -194,7 +194,7 @@
                 {
                     "name": "",
                     "id": "b7864d57-7304-4d8e-afc9-57882286d223",
-                    "path": "<XInputController>/rightShoulder",
+                    "path": "<Gamepad>/buttonEast",
                     "interactions": "",
                     "processors": "",
                     "groups": "Xbox",
